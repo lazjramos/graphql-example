@@ -1,2 +1,25 @@
+## Server
 /gql-server/node_modules
 package-lock.json
+
+##Client
+/gql-client/node_modules
+/gql-client//.pnp
+/gql-client/.pnp.js
+
+# testing
+/gql-client//coverage
+
+# production
+/gql-client//build
+
+# misc
+/gql-client/.DS_Store
+/gql-client/.env.local
+/gql-client/.env.development.local
+/gql-client/.env.test.local
+/gql-client/.env.production.local
+
+/gql-client/npm-debug.log*
+/gql-client/yarn-debug.log*
+/gql-client/yarn-error.log*
