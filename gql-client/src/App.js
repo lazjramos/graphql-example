@@ -71,7 +71,7 @@ function App (props) {
                                     variables: {
                                       id: row.id
                                     }
-                                  })
+                                  });
                                 }}
                               >
                                 Toogle status
