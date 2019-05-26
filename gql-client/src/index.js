@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client-preset';
+import { ApolloClient } from 'apollo-boost';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
@@ -18,9 +18,11 @@ const client = new ApolloClient({
 });
 
 const Root = () => (
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <div className="App">
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </div>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));
