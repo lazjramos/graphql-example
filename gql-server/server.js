@@ -98,4 +98,4 @@ app.use('/graphql', express_graphql({
   graphiql:true
 }));
 
-app.listen(port, () => console.log(`Server running on localhost:${port}/graphql`));
+app.listen(port, () => console.log(`Server running on http://localhost:${port}/graphql`));
