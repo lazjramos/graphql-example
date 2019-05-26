@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Mutation } from "react-apollo";
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,17 +47,40 @@ function App (props) {
                   </TableHead>
                   <TableBody>
                     {props.data.tasks.map(row => (
-                      <TableRow key={row.id}>
-                        <TableCell align="center">{row.id}</TableCell>
-                        <TableCell align="center">{row.title}</TableCell>
-                        <TableCell align="center">{row.description}</TableCell>
-                        <TableCell align="center">{row.status ? "Completed" : "Uncompleted"}</TableCell>
-                        <TableCell align="center">
-                          <Button variant="outlined" className={classes.button}>
-                            Toogle status
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                      <Mutation
+                        mutation={TOOGLE_STATUS}
+                        key={row.id}
+                        refetchQueries={() => {
+                          return [{
+                            query: GET_ALL_TASKS
+                          }];
+                        }}
+                      >
+                        {(toogleStatus, { data }) => (
+                          <TableRow key={row.id}>
+                            <TableCell align="center">{row.id}</TableCell>
+                            <TableCell align="center">{row.title}</TableCell>
+                            <TableCell align="center">{row.description}</TableCell>
+                            <TableCell align="center">{row.status ? "Completed" : "Uncompleted"}</TableCell>
+                            <TableCell align="center">
+                              <Button
+                                variant="outlined"
+                                className={classes.button}
+                                onClick={ e => {
+                                  e.preventDefault();
+                                  toogleStatus({
+                                    variables: {
+                                      id: row.id
+                                    }
+                                  })
+                                }}
+                              >
+                                Toogle status
+                            </Button>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </Mutation>
                     ))}
                   </TableBody>
                 </Table>
@@ -68,16 +92,28 @@ function App (props) {
   );
 }
 
-const queryAllTasks = gql`
+const GET_ALL_TASKS = gql`
   query {
     tasks {
       id
       title
       description
+      status
     }
   }
 `;
 
-const appWithData = graphql(queryAllTasks)(App);
+const TOOGLE_STATUS = gql`
+  mutation ($id: Int!){
+    updateTaskStatus(id: $id) {
+      id
+      title
+      description
+      status
+    }
+  }
+`;
+
+const appWithData = graphql(GET_ALL_TASKS)(App);
 
 export default appWithData;
