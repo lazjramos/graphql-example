@@ -1,6 +1,7 @@
 const express = require('express');
 const express_graphql = require('express-graphql');
 const { buildSchema } = require('graphql');
+const cors = require('cors');
 
 // GraphQL Schema
 const schema = buildSchema(`
@@ -87,6 +88,9 @@ const root = {
  * Create an express server on port 4000
  */
 const app = express();
+
+app.use(cors());
+
 app.use('/graphql', express_graphql({
   schema,
   rootValue: root,
