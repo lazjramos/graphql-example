@@ -10,7 +10,7 @@ const schema = buildSchema(`
     tasks: [Task]
   }
   type Mutation {
-    updateTaskStatus(id: Int!, status: Boolean!): Task
+    updateTaskStatus(id: Int!): Task
   }
   type Task {
     id: Int
@@ -63,13 +63,13 @@ const getTask = (args) => {
 const getTasks = () => taskArray;
 
 /**
- * Update a task by ID
- * @param {*} args 
+ * Update task by ID
+ * @param {*} param0 
  */
-const updateTaskStatus = ({id, status}) => {
-  taskArray.map(task => {
+const updateTaskStatus = async ({id}) => {
+  await taskArray.map(task => {
     if (task.id == id) {
-      return task.status = status;
+      return task.status = !task.status;
     }
   });
   return taskArray.filter(task => task.id === id)[0];
