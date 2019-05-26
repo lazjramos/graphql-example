@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import { Mutation } from "react-apollo";
+import { graphql, Mutation } from 'react-apollo';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,7 +55,7 @@ function App (props) {
                           }];
                         }}
                       >
-                        {(toogleStatus, { data }) => (
+                        {(toogleStatus) => (
                           <TableRow key={row.id}>
                             <TableCell align="center">{row.id}</TableCell>
                             <TableCell align="center">{row.title}</TableCell>
@@ -66,7 +65,7 @@ function App (props) {
                               <Button
                                 variant="outlined"
                                 className={classes.button}
-                                onClick={ e => {
+                                onClick={e => {
                                   e.preventDefault();
                                   toogleStatus({
                                     variables: {
@@ -76,7 +75,7 @@ function App (props) {
                                 }}
                               >
                                 Toogle status
-                            </Button>
+                              </Button>
                             </TableCell>
                           </TableRow>
                         )}
