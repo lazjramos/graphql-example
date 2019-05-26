@@ -88,6 +88,7 @@ const root = {
  * Create an express server on port 4000
  */
 const app = express();
+const port = 4000;
 
 app.use(cors());
 
@@ -97,4 +98,4 @@ app.use('/graphql', express_graphql({
   graphiql:true
 }));
 
-app.listen(4000, () => console.log('Server running on localhost:4000/graphql'));
+app.listen(port, () => console.log(`Server running on localhost:${port}/graphql`));
